@@ -11,7 +11,7 @@ The following were the tables created.
 5. Orders Table:The Orders table captures essential details regarding customer orders. It includes Order_Id, Customer_Id, Order_Date, Shipping_Date, Real_Shipping_Days, Scheduled_Shipping_Days, Delivery_Status, Late_Delivery_Risk, Payment_Type, Market, Benefit_Per_Order, Sales_Per_Customer, Department_Id, Shipping_Mode, Region, Order_Status, Sales_Amount, and Profit.
 6. Order_Items Table:The Order_Items table provides a granular view of individual items within each order. It includes Order_Item_Id, Order_Id, Product_Id, Discount_Amount, Discount_Rate, Quantity, Product_Price, Profit_Ratio, and Total_Amount.
 
-### SQL code to create the tables and insert/update the tables
+### SQL code used to create the tables and insert/update the tables
 ```sql
 CREATE TABLE Departments (
     Department_Id INT PRIMARY KEY,
