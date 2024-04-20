@@ -133,9 +133,10 @@ SET
 -- My choice of unique id for each order, stems from the fact that, same order ID is assigned to multiple orders from the same customer.
 -- After verifying that there are no dupicates, and the order_item_Id also uniquely identifies individual order. I concluded to use the Order_Item_Id.
 -- Note this is a practise project and this approach is not ideal in the real world unless, clients or stakeholders accepts such an approach.
+
 INSERT INTO Orders(Order_Id)
 SELECT DISTINCT Order_Item_Id FROM Main_Table; --- Inserting distinct order_item_id values from Main_Table into the Orders table.
-												-- Using order_item_id as the order_id because the order_id alone is not unique for each order due to
+
 												-- multiple products being purchased in a single order. The order_item_id uniquely identifies each order item,
 												-- ensuring that each row in the Orders table represents a distinct order item, despite potential repetitions in the order_id.
 
@@ -160,12 +161,7 @@ SET
 	Sales_Amount = (SELECT DISTINCT Sales FROM Main_Table WHERE Orders.Order_Id = Main_Table.Order_Item_Id),
 	Profit = (SELECT DISTINCT Order_Profit_Per_Order FROM Main_Table WHERE Orders.Order_Id = Main_Table.Order_Item_Id) ; 
 
-
-SELECT  DISTINCT TOP 5  Order_item_id, Order_Customer_Id,  order_date_DateOrders, shipping_date_DateOrders,Delivery_Status,Late_delivery_risk,Type,Market,Benefit_per_order,Sales_per_customer, Department_Id
-FROM Main_Table
-ORDER BY Order_Item_Id ASC
-
-
+---Inserting into the order_item table
 INSERT INTO Order_Items(Order_Item_Id)
 SELECT DISTINCT Order_Item_Id
 FROM Main_Table;
