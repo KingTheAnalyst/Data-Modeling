@@ -42,24 +42,24 @@ CREATE TABLE Products (
 );
 
 CREATE TABLE Orders (
-    Order_Id INT PRIMARY KEY,
-    Customer_Id INT REFERENCES Customers(Customer_Id),
-    Order_Date DATE,
-    Shipping_Date DATE,
-    Real_Shipping_Days INT,
-    Scheduled_Shipping_Days INT,
-    Delivery_Status VARCHAR(255),
-    Late_Delivery_Risk VARCHAR(255),
-    Payment_Type VARCHAR(255),
-    Market VARCHAR(255),
-    Benefit_Per_Order DECIMAL(10, 2), 
-    Sales_Per_Customer DECIMAL(10, 2),
-    Department_Id INT REFERENCES Departments(Department_Id),
-	  Shipping_Mode VARCHAR(50),
-	  Region VARCHAR(150),
-	  Order_Status VARCHAR(50),
-	  Sales_Amount DECIMAL (10,2),
-	  Profit DECIMAL(10,2)
+    	Order_Id INT PRIMARY KEY,
+	Customer_Id INT REFERENCES Customers(Customer_Id),
+    	Order_Date DATE,
+    	Shipping_Date DATE,
+    	Real_Shipping_Days INT,
+    	Scheduled_Shipping_Days INT,
+	Delivery_Status VARCHAR(255),
+    	Late_Delivery_Risk VARCHAR(255),
+    	Payment_Type VARCHAR(255),
+	Market VARCHAR(255),
+    	Benefit_Per_Order DECIMAL(10, 2), 
+    	Sales_Per_Customer DECIMAL(10, 2),
+    	Department_Id INT REFERENCES Departments(Department_Id),
+	Shipping_Mode VARCHAR(50),
+ 	Region VARCHAR(150),
+	Order_Status VARCHAR(50),
+	Sales_Amount DECIMAL (10,2),
+	Profit DECIMAL(10,2)
 );
 
 
@@ -100,7 +100,8 @@ SET
 
 -- insert the customer id into the customers table
 INSERT INTO Customers(Customer_Id)
-SELECT DISTINCT Customer_Id FROM Main_Table;
+SELECT DISTINCT Customer_Id
+FROM Main_Table;
 
 -- Update additional information into Customers table
 UPDATE Customers 
@@ -115,10 +116,10 @@ SET
 
 ---Inserting the product id into the product table
 INSERT INTO Products(Product_Id)
-SELECT DISTINCT Product_Card_Id FROM Main_Table;
+SELECT DISTINCT Product_Card_Id
+FROM Main_Table;
 
 -- Update additional information into Products table
-
 UPDATE Products 
 SET 
     Product_Name = (SELECT  DISTINCT Product_Name FROM Main_Table WHERE Products.Product_Id = Main_Table.Product_Card_Id),
@@ -126,12 +127,6 @@ SET
     Status = (SELECT DISTINCT Product_Status FROM Main_Table WHERE Products.Product_Id = Main_Table.Product_Card_Id),
     Category_Id = (SELECT DISTINCT Product_Category_Id FROM Main_Table WHERE Products.Product_Id = Main_Table.Product_Card_Id);
 
----Verify the Products table
-SELECT *
-FROM Products;
-SELECT DISTINCT Product_Card_Id, Product_Name,Product_Price,Product_Status, Product_Category_Id
-FROM Main_Table
-ORDER BY Product_Card_Id ;
 
 -- Insert primary keys into orders table
 
@@ -140,8 +135,6 @@ SELECT DISTINCT Order_Item_Id FROM Main_Table; --- Inserting distinct order_item
 												-- Using order_item_id as the order_id because the order_id alone is not unique for each order due to
 												-- multiple products being purchased in a single order. The order_item_id uniquely identifies each order item,
 												-- ensuring that each row in the Orders table represents a distinct order item, despite potential repetitions in the order_id.
-
-									
 
 --insert additional information into Orders table
 UPDATE Orders 
@@ -165,20 +158,16 @@ SET
 	Profit = (SELECT DISTINCT Order_Profit_Per_Order FROM Main_Table WHERE Orders.Order_Id = Main_Table.Order_Item_Id) ; 
 
 
-	
----Verifying the orders information with that from the main table
-SELECT TOP 5 * 
-FROM Orders;
-
 SELECT  DISTINCT TOP 5  Order_item_id, Order_Customer_Id,  order_date_DateOrders, shipping_date_DateOrders,Delivery_Status,Late_delivery_risk,Type,Market,Benefit_per_order,Sales_per_customer, Department_Id
 FROM Main_Table
 ORDER BY Order_Item_Id ASC
 
 
 INSERT INTO Order_Items(Order_Item_Id)
-SELECT DISTINCT Order_Item_Id FROM Main_Table;
+SELECT DISTINCT Order_Item_Id
+FROM Main_Table;
 
--- Update or insert additional information into Order_Items table
+-- Update  additional information into Order_Items table
 UPDATE Order_Items 
 SET 
     Order_Id = (SELECT DISTINCT Order_Id FROM Main_Table WHERE Order_Items.Order_Item_Id = Main_Table.Order_Item_Id),
@@ -190,25 +179,6 @@ SET
     Profit_Ratio = (SELECT DISTINCT Order_Item_Profit_Ratio FROM Main_Table WHERE Order_Items.Order_Item_Id = Main_Table.Order_Item_Id),
     Sales_Amount = (SELECT DISTINCT Sales FROM Main_Table WHERE Order_Items.Order_Item_Id = Main_Table.Order_Item_Id),
     Total_Amount = (SELECT DISTINCT Order_Item_Total FROM Main_Table WHERE Order_Items.Order_Item_Id = Main_Table.Order_Item_Id);
-
-
----Verifying the order_items table with the data from the main_table
-SELECT TOP 5  * 
-FROM Order_Items;
-
-SELECT TOP 5
-	Order_Item_Id, 
-	Order_Id,
-	Product_Card_Id, 
-	Order_Item_Discount, 
-	Order_Item_Discount_Rate,
-	Order_Item_Quantity, 
-	Order_Item_Product_Price, 
-	Order_Item_Profit_Ratio,
-	Sales, 
-	Order_Item_Total
-FROM Main_Table
-ORDER BY Order_Item_Id
 
 
 
