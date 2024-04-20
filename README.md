@@ -1,5 +1,5 @@
 # Database Normalization 
-As part of the preprocessing stepks, we undertook database normalization to optimize the dataset structure. Database normalization is the process of organizing a database schema to reduce redundancy and dependency, thereby improving data integrity, and minimizing anomalies. By splitting the dataset into multiple relational tables and establishing relationships between them, we effectively normalized the data structure, facilitating efficient data retrieval, analysis, and maintenance.
+As part of the preprocessing steps, we undertook database normalization to optimize the dataset structure. Database normalization is the process of organizing a database schema to reduce redundancy and dependency, thereby improving data integrity, and minimizing anomalies. By splitting the dataset into multiple relational tables and establishing relationships between them, we effectively normalized the data structure, facilitating efficient data retrieval, analysis, and maintenance.
 ## Tables Created
 The following were the tables created.
 
