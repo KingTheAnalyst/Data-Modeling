@@ -131,7 +131,7 @@ SET
 -- Insert primary keys into orders table
 -- My choice of unique id for each order, stems from the fact that, same order ID is assigned to multiple orders from the same customer.
 -- After verifying that there are no dupicates, and the order_item_Id also uniquely identifies individual order. I concluded to use the Order_Item_Id.
--- Note this is a practise project and this approach is not ideal in the real world unless, clients or stakeholders accepts such approach
+-- Note this is a practise project and this approach is not ideal in the real world unless, clients or stakeholders accepts such an approach.
 INSERT INTO Orders(Order_Id)
 SELECT DISTINCT Order_Item_Id FROM Main_Table; --- Inserting distinct order_item_id values from Main_Table into the Orders table.
 												-- Using order_item_id as the order_id because the order_id alone is not unique for each order due to
